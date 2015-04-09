@@ -1,0 +1,12 @@
+<?php
+drupal_set_message("serialnumbers active");
+
+function deviations_serialnumbers_node_insert($node){
+  $msg = "node saved: ";
+  $msg.= _deviations_serialnumbers_find_max($node->nid);
+  drupal_set_message($msg);
+}
+
+function _deviations_serialnumbers_find_max($nid) {
+  return $nid;
+}

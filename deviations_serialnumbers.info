@@ -1,0 +1,6 @@
+name = Deviations Serialnumbers
+description = Provides a field where there is a unique serialnumber pr taxonomy top-leve is added to a spesific content type.
+core = 7.x
+package = Deviations
+files[] = tests/example.test
+configure = admin/config/deviations_serialnumbers
