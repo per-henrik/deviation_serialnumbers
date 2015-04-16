@@ -1,12 +1,61 @@
 <?php
-drupal_set_message("serialnumbers active");
+function deviations_serialnumbers_page_build(&$page) {
+  drupal_set_message("serialnumbers active!_!");  
+  $msg = node_type_get_names();
+  dsm($msg);
+}
 
 function deviations_serialnumbers_node_insert($node){
-  $msg = "node saved: ";
-  $msg.= _deviations_serialnumbers_find_max($node->nid);
+  $msg  = "node saved: ";
+  $msg .= _deviations_serialnumbers_find_max($node->nid);
+  $msg .= print_r(node_type_get_names(), true);
   drupal_set_message($msg);
 }
 
 function _deviations_serialnumbers_find_max($nid) {
   return $nid;
 }
+
+function _dsm ($input) {
+  $msg  = "<pre>";
+  $msg .= print_r($msg, true);
+  $msg .= "</pre>";
+  drupal_set_message($msg);
+}
+
+/**
+ * Implements hook_menu().
+ */
+function deviations_serialnumbers_menu() {
+  $items = array();
+
+  $items['admin/config/deviations_serialnumbers'] = array(
+    'title' => 'Current posts',
+    'description' => 'Configuration for Current posts module',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('deviations_serialnumbers_admin_form'),
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Page callback: Current posts settings
+ *
+ * @see current_posts_menu()
+ */
+function deviations_serialnumbers_admin_form($form, &$form_state) {
+  $options = node_type_get_names();
+
+  $form['deviations_serialnumbers_admin_form'] = array(
+    '#title' => t(''),
+    '#type' => 'checkboxes',
+    '#description' => t(''),
+    '#options' => $options,
+  );
+
+  return system_settings_form($form);
+}
+?>
