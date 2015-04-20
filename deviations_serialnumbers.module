@@ -49,13 +49,14 @@ function deviations_serialnumbers_menu() {
 function deviations_serialnumbers_admin_form($form, &$form_state) {
   $options = node_type_get_names();
 
-  $form['deviations_serialnumbers_admin_form'] = array(
-    '#title' => t(''),
+  $form['deviations_serialnumbers_content_type'] = array(
+    '#title' => t('Content types where to add serialnumbers'),
     '#type' => 'checkboxes',
     '#description' => t(''),
     '#options' => $options,
+    '#default_value' => variable_get('deviations_serialnumbers_content_type', 3),
+    
   );
-
+  dsm(variable_get('deviations_serialnumbers_content_type'));
   return system_settings_form($form);
 }
-?>
