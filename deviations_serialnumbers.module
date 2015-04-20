@@ -1,10 +1,6 @@
 <?php
 function deviations_serialnumbers_page_build(&$page) {
-/*
-  drupal_set_message("serialnumbers active!_!");  
-  $msg = node_type_get_names();
-  dsm($msg);
-  */
+# here should go serial number display or
 }
 
 function deviations_serialnumbers_node_insert($node){
@@ -16,13 +12,6 @@ function deviations_serialnumbers_node_insert($node){
 
 function _deviations_serialnumbers_find_max($nid) {
   return $nid;
-}
-
-function _dsm ($input) {
-  $msg  = "<pre>";
-  $msg .= print_r($msg, true);
-  $msg .= "</pre>";
-  drupal_set_message($msg);
 }
 
 /**
