@@ -5,7 +5,6 @@ function deviations_serialnumbers_page_build(&$page) {
   $msg = node_type_get_names();
   dsm($msg);
   */
-  
 }
 
 function deviations_serialnumbers_node_insert($node){
