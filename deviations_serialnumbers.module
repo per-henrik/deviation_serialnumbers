@@ -1,8 +1,11 @@
 <?php
 function deviations_serialnumbers_page_build(&$page) {
+/*
   drupal_set_message("serialnumbers active!_!");  
   $msg = node_type_get_names();
   dsm($msg);
+  */
+  
 }
 
 function deviations_serialnumbers_node_insert($node){
