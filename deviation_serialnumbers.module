@@ -1,4 +1,8 @@
 <?php
+/**
+ * Internal function to set common variables
+ */
+
 function _deviation_serialnumbers_set_variables () {
   $ret = array (
     'Content type' => 'serialnumbersct',
@@ -7,7 +11,6 @@ function _deviation_serialnumbers_set_variables () {
   );
   return $ret;
 }
-
 
 /**
  * Implementation of hook_node_presave
@@ -58,7 +61,6 @@ function _deviation_serialnumbers_find_max($tid) {
  */
 function deviation_serialnumbers_menu() {
   $items = array();
-
   $items['admin/config/deviation_serialnumbers'] = array(
     'title' => 'Current posts',
     'description' => 'Configuration for Current posts module',
@@ -67,7 +69,6 @@ function deviation_serialnumbers_menu() {
     'access arguments' => array('access administration pages'),
     'type' => MENU_NORMAL_ITEM,
   );
-
   return $items;
 }
 
