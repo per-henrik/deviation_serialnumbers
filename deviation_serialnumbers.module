@@ -1,17 +1,56 @@
 <?php
-function deviation_serialnumbers_page_build(&$page) {
-# here should go serial number display or
+function _deviation_serialnumbers_set_variables () {
+  $ret = array (
+    'Content type' => 'serialnumbersct',
+    'Taxonomy' => 'tags',
+    'Field' => 'field_serialnumber'
+  );
+  return $ret;
 }
 
-function deviation_serialnumbers_node_insert($node){
-  $msg  = "node saved: ";
-  $msg .= _deviation_serialnumbers_find_max($node->nid);
-  $msg .= print_r(node_type_get_names(), true);
-  drupal_set_message($msg);
+
+/**
+ * Implementation of hook_node_presave
+ */
+function deviation_serialnumbers_node_presave($node) {
+  $v = _deviation_serialnumbers_set_variables();
+  if ($node->type == $v['Content type']) {
+    $field_values = field_get_items('node', $node, $v['Field']);
+    if ( (count($field_values)>0) && ($field_values[0]['value']>0) ) {
+      $old_sn = $field_values[0]['value'];
+      watchdog("deviation","serialnumber was set from before: " . $old_sn);
+    } else {
+      $tid = $node->field_tags[0]['value'];
+      $new_sn = _deviation_serialnumbers_find_max($tid);
+      drupal_set_message("tid: ".$tid);
+      $node->field_serialnumber[$node->language][0]['value'] = $new_sn;
+      watchdog("deviation","serialnumber was set to: " . $new_sn);
+    }
+  }
 }
 
-function _deviation_serialnumbers_find_max($nid) {
-  return $nid;
+/**
+ * Internal function to find max value
+ */
+function _deviation_serialnumbers_find_max($tid) {
+  $v = _deviation_serialnumbers_set_variables();
+  $query = new EntityFieldQuery();
+  $entities = $query->entityCondition('entity_type', 'node')
+  ->propertyCondition('type', $v['Content type'])
+  ->execute();
+  # $query->propertyOrderBy('created', 'DESC');
+  foreach ($entities['node'] as $entity) {
+    $node = node_load($entity->nid);
+    drupal_set_message("<pre>".print_r($node->field_tags, true)."</pre>");
+    drupal_set_message("<pre>".print_r($node, true)."</pre>");
+  }
+  drupal_set_message("<pre>".print_r($entities['node'], true). "</pre>");
+
+/*  if (!empty($entities['node'])) {
+    $node = node_load(array_shift(array_keys($entities['node'])));
+  }
+  */
+  return 0;  
 }
 
 /**
